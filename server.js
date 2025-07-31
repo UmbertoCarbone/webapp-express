@@ -1,17 +1,17 @@
-const express = require("express");
-const app = express();
-const port = 3030;
+const express = require("express")
+const app = express()
+const port = process.env.PORT
+
+app.use(express.static("public"))
+
+app.get("/movies", (req, res) => {
+    res.send("tutto il contenuto")
+})
+
+app.get("/movies/:id", (req, res) => {
+    res.send("contenuto id " + req.params.id)
+})
 
 app.listen(port, () => {
-    console.log(`Example app listening on port http://localhost:${port}`);
-});
-
-
-app.get("/movies", (req,res)=>{
-    res.send("All Movies")
+    console.log(`Example app listening on port http://localhost:${port}`)
 })
-
-app.get("/movies/:id", (req,res)=>{
-    res.send(`Single Movies ${req.params.id}`)
-})
-
