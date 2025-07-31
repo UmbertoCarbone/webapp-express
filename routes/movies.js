@@ -2,14 +2,11 @@
 const express = require("express")
 //definiaamo le rotte app
 const router = express.Router()
+const moviesController = require("../controller/moviesController")
 
-router.get("/", (req, res) => {
-    res.send("tutto il contenuto")
-})
+router.get("/", moviesController.index)
 
-router.get("/:id", (req, res) => {
-    res.send("contenuto id " + req.params.id)
-})
+router.get("/:id",moviesController.show )
 
 
 module.exports = router
