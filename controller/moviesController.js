@@ -33,7 +33,7 @@ function show(req, res) {
 
         const reviewsSql = 'SELECT movies.*, reviews.text FROM movies LEFT JOIN reviews ON movies.id = reviews.movie_id WHERE movies.id = ? '
 
-        connection.execute(reviewsSql,[id], (err, result) => {
+        connection.execute(reviewsSql, [id], (err, result) => {
             if (err) return res.status(500).json({
                 error: true,
                 message: err.message
@@ -50,12 +50,42 @@ function show(req, res) {
     })
 }
 
+// Nel file controller/moviesController.js
+/* function post(req, res) {
+    const movieId = req.params.id;
+    const { text, name, vote } = req.body;
 
+    if (!text || text.trim() === '') {
+        return res.status(400).json({
+            error: true,
+            message: "Il testo della recensione è obbligatorio"
+        });
+    }
 
+    const sql = `INSERT INTO reviews (movie_id, text, name, vote) VALUES (?, ?, ?, ?)`;
+
+    connection.execute(sql, [movieId, text.trim(), name || 'Anonimo', vote || 5], (err, result) => {
+        if (err) {
+            return res.status(500).json({
+                error: true,
+                message: err.message
+            });
+        }
+
+        res.status(201).json({
+            success: true,
+            message: "Recensione aggiunta con successo",
+            reviewId: result.insertId
+        });
+    });
+} */
+// Aggiungi post all'export
 module.exports = {
     index,
-    show
+    show,
+   /*  post */  // ← Aggiungi questa
 }
+
 
 
 

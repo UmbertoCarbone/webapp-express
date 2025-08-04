@@ -13,7 +13,7 @@ app.use(cors({
 app.use(express.json());
 
 // ✅ Servire immagini statiche PRIMA dei middleware di errore
-app.use('/images', express.static('public/images'))
+app.use(express.static('public'))
 
 const routerMovies = require("./routes/movies")
 
