@@ -19,8 +19,9 @@ const routerMovies = require("./routes/movies")
 
 // ✅ Rotte API
 app.use("/api/movies/", routerMovies)
+app.use("/api/movies/:id/reviews", routerMovies)
 
-// ✅ SPOSTA I MIDDLEWARE ALLA FINE (dopo tutto il resto)
+// ✅ SPOSTA I MIDDLEWARE ALLA FINE
 const notFound = require("./middlewares/notFound")
 const serverError = require("./middlewares/serverError")
 

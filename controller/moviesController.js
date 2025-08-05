@@ -31,7 +31,7 @@ function show(req, res) {
         }
         const movie = result[0]
 
-        const reviewsSql = 'SELECT movies.*, reviews.text FROM movies LEFT JOIN reviews ON movies.id = reviews.movie_id WHERE movies.id = ? '
+        const reviewsSql = 'SELECT movies.*, reviews.text, reviews.name, reviews.vote FROM movies LEFT JOIN reviews ON movies.id = reviews.movie_id WHERE movies.id = ? '
 
         connection.execute(reviewsSql, [id], (err, result) => {
             if (err) return res.status(500).json({
@@ -41,30 +41,24 @@ function show(req, res) {
 
 
             const movieReviews = result
-
+            console.log(result)
             movie.reviews = movieReviews
 
             res.json(movie)
+
         })
 
     })
 }
 
-// Nel file controller/moviesController.js
-/* function post(req, res) {
-    const movieId = req.params.id;
+
+function storeReview(req, res) {
+    const { id } = req.params
     const { text, name, vote } = req.body;
 
-    if (!text || text.trim() === '') {
-        return res.status(400).json({
-            error: true,
-            message: "Il testo della recensione è obbligatorio"
-        });
-    }
+    const sql = `INSERT INTO reviews (movie_id, name, vote, text) VALUES (?, ?, ?, ?)`
 
-    const sql = `INSERT INTO reviews (movie_id, text, name, vote) VALUES (?, ?, ?, ?)`;
-
-    connection.execute(sql, [movieId, text.trim(), name || 'Anonimo', vote || 5], (err, result) => {
+    connection.execute(sql, [id, name, vote, text], (err, result) => {
         if (err) {
             return res.status(500).json({
                 error: true,
@@ -73,17 +67,23 @@ function show(req, res) {
         }
 
         res.status(201).json({
-            success: true,
+            error: false,
             message: "Recensione aggiunta con successo",
-            reviewId: result.insertId
+            review: {
+                id: result.insertId,
+                movie_id: id,
+                name: name,
+                vote: vote,
+                text: text
+            }
         });
     });
-} */
+}
 // Aggiungi post all'export
 module.exports = {
     index,
     show,
-   /*  post */  // ← Aggiungi questa
+    storeReview
 }
 
 
