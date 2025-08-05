@@ -22,8 +22,9 @@ function show(req, res) {
             error: true,
             message: err.message
         })
-
-        if (result.length === 0) {
+/* console.log(result)
+console.log(result.length) */
+        if (result.length == 0) {
             return res.status(404).json({
                 error: true,
                 message: "Movie not found"
